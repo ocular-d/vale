@@ -1,46 +1,46 @@
-const axios = require("axios");
-const tar = require("tar");
-const fs = require("fs");
-const path = require("path");
-const pkg = require("./package.json");
-const { spawn } = require("child_process");
+const axios = require('axios');
+const tar = require('tar');
+const fs = require('fs');
+const path = require('path');
+const { spawn } = require('child_process');
+const pkg = require('./package.json');
 
 const args = process.argv.slice(2);
 
-const isWindows = process.platform === "win32";
-const outputPath = path.join(__dirname, "bin");
-const outputBin = path.join(outputPath, isWindows ? "vale.exe" : "vale");
+const isWindows = process.platform === 'win32';
+const outputPath = path.join(__dirname, 'bin');
+const outputBin = path.join(outputPath, isWindows ? 'vale.exe' : 'vale');
 
 function getPlatform() {
   const { platform, arch } = process;
-  if (platform === "win32") {
-    if (arch === "x64") return "Windows_64-bit";
-    if (arch === "x32") return "Windows_386";
-    if (arch === "arm64") return "Windows_arm64";
+  if (platform === 'win32') {
+    if (arch === 'x64') return 'Windows_64-bit';
+    if (arch === 'x32') return 'Windows_386';
+    if (arch === 'arm64') return 'Windows_arm64';
   }
-  if (platform === "linux") {
-    if (arch === "x64") return "Linux_64-bit";
-    if (arch === "x32") return "Linux_386";
-    if (arch === "arm64") return "Linux_arm64";
+  if (platform === 'linux') {
+    if (arch === 'x64') return 'Linux_64-bit';
+    if (arch === 'x32') return 'Linux_386';
+    if (arch === 'arm64') return 'Linux_arm64';
   }
-  if (platform === "darwin") {
-    if (arch === "x64") return "macOS_64-bit";
-    if (arch === "arm64") return "macOS_arm64";
+  if (platform === 'darwin') {
+    if (arch === 'x64') return 'macOS_64-bit';
+    if (arch === 'arm64') return 'macOS_arm64';
   }
   throw new Error(`Unsupported platform: ${platform}`);
 }
 
 function getReleaseUrl() {
   const platform = getPlatform();
-  const version = pkg.version.split("-").at(0);
+  const version = pkg.version.split('-').at(0);
   return `https://github.com/errata-ai/vale/releases/download/v${version}/vale_${version}_${platform}${
-    isWindows ? ".zip" : ".tar.gz"
+    isWindows ? '.zip' : '.tar.gz'
   }`;
 }
 
 async function downloadAndExtract() {
   const url = getReleaseUrl();
-  const response = await axios.get(url, { responseType: "stream" });
+  const response = await axios.get(url, { responseType: 'stream' });
   return new Promise((resolve, reject) => {
     let pipe;
     if (isWindows) {
@@ -48,7 +48,7 @@ async function downloadAndExtract() {
     } else {
       pipe = response.data.pipe(tar.extract({ cwd: outputPath }));
     }
-    pipe.on("close", resolve).on("error", reject);
+    pipe.on('close', resolve).on('error', reject);
   });
 }
 
