@@ -1,7 +1,7 @@
 {
-  "name": "@vvago/vale",
+  "name": "@ocular-d/vale-bin",
   "version": "3.0.7",
-  "description": "download pre-build vale binaries for your platform",
+  "description": "Download pre-build vale binaries for your platform",
   "main": "index.js",
   "scripts": {
     "prepack": "rimraf ./bin",
@@ -15,19 +15,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zeropaper/vale.git"
+    "url": "git+https://github.com/ocular-d/vale.git"
   },
   "keywords": [
     "vale",
     "linting",
     "text"
   ],
-  "author": "Valentin \"zeropaper\" Vago",
+  "author": "Valentin \"zeropaper\" Vago & svx",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zeropaper/vale/issues"
+    "url": "https://github.com/ocular-d/vale/issues"
   },
-  "homepage": "https://github.com/zeropaper/vale#readme",
+  "homepage": "https://github.com/ocular-d/vale#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "tar": "^6.1.15",
